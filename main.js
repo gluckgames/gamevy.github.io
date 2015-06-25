@@ -1,242 +1,50 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({"/var/lib/jenkins/jobs/gamevy-homepage/workspace/js/index.js":[function(require,module,exports){
 "use strict";
 
-window.jQuery = window.$ = require("jquery");
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+var _jquery = require("jquery");
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+window.jQuery = _jquery2["default"];
 require("bootstrap");
-require("./landitt");
 
-},{"./landitt":"/var/lib/jenkins/jobs/gamevy-homepage/workspace/js/landitt.js","bootstrap":"/var/lib/jenkins/jobs/gamevy-homepage/workspace/node_modules/bootstrap/dist/js/npm.js","jquery":"/var/lib/jenkins/jobs/gamevy-homepage/workspace/node_modules/jquery/dist/jquery.js"}],"/var/lib/jenkins/jobs/gamevy-homepage/workspace/js/jquery.waypoints.min.js":[function(require,module,exports){
-/*!
-Waypoints - 3.1.1
-Copyright © 2011-2015 Caleb Troughton
-Licensed under the MIT license.
-https://github.com/imakewebthings/waypoints/blog/master/licenses.txt
-*/
-"use strict";
+require("../node_modules/waypoints/lib/jquery.waypoints.js");
 
-!(function () {
-  "use strict";function t(o) {
-    if (!o) throw new Error("No options passed to Waypoint constructor");if (!o.element) throw new Error("No element option passed to Waypoint constructor");if (!o.handler) throw new Error("No handler option passed to Waypoint constructor");this.key = "waypoint-" + e, this.options = t.Adapter.extend({}, t.defaults, o), this.element = this.options.element, this.adapter = new t.Adapter(this.element), this.callback = o.handler, this.axis = this.options.horizontal ? "horizontal" : "vertical", this.enabled = this.options.enabled, this.triggerPoint = null, this.group = t.Group.findOrCreate({ name: this.options.group, axis: this.axis }), this.context = t.Context.findOrCreateByElement(this.options.context), t.offsetAliases[this.options.offset] && (this.options.offset = t.offsetAliases[this.options.offset]), this.group.add(this), this.context.add(this), i[this.key] = this, e += 1;
-  }var e = 0,
-      i = {};t.prototype.queueTrigger = function (t) {
-    this.group.queueTrigger(this, t);
-  }, t.prototype.trigger = function (t) {
-    this.enabled && this.callback && this.callback.apply(this, t);
-  }, t.prototype.destroy = function () {
-    this.context.remove(this), this.group.remove(this), delete i[this.key];
-  }, t.prototype.disable = function () {
-    return (this.enabled = !1, this);
-  }, t.prototype.enable = function () {
-    return (this.context.refresh(), this.enabled = !0, this);
-  }, t.prototype.next = function () {
-    return this.group.next(this);
-  }, t.prototype.previous = function () {
-    return this.group.previous(this);
-  }, t.invokeAll = function (t) {
-    var e = [];for (var o in i) e.push(i[o]);for (var n = 0, r = e.length; r > n; n++) e[n][t]();
-  }, t.destroyAll = function () {
-    t.invokeAll("destroy");
-  }, t.disableAll = function () {
-    t.invokeAll("disable");
-  }, t.enableAll = function () {
-    t.invokeAll("enable");
-  }, t.refreshAll = function () {
-    t.Context.refreshAll();
-  }, t.viewportHeight = function () {
-    return window.innerHeight || document.documentElement.clientHeight;
-  }, t.viewportWidth = function () {
-    return document.documentElement.clientWidth;
-  }, t.adapters = [], t.defaults = { context: window, continuous: !0, enabled: !0, group: "default", horizontal: !1, offset: 0 }, t.offsetAliases = { "bottom-in-view": function bottomInView() {
-      return this.context.innerHeight() - this.adapter.outerHeight();
-    }, "right-in-view": function rightInView() {
-      return this.context.innerWidth() - this.adapter.outerWidth();
-    } }, window.Waypoint = t;
-})(), (function () {
-  "use strict";function t(t) {
-    window.setTimeout(t, 1e3 / 60);
-  }function e(t) {
-    this.element = t, this.Adapter = n.Adapter, this.adapter = new this.Adapter(t), this.key = "waypoint-context-" + i, this.didScroll = !1, this.didResize = !1, this.oldScroll = { x: this.adapter.scrollLeft(), y: this.adapter.scrollTop() }, this.waypoints = { vertical: {}, horizontal: {} }, t.waypointContextKey = this.key, o[t.waypointContextKey] = this, i += 1, this.createThrottledScrollHandler(), this.createThrottledResizeHandler();
-  }var i = 0,
-      o = {},
-      n = window.Waypoint,
-      r = window.onload;e.prototype.add = function (t) {
-    var e = t.options.horizontal ? "horizontal" : "vertical";this.waypoints[e][t.key] = t, this.refresh();
-  }, e.prototype.checkEmpty = function () {
-    var t = this.Adapter.isEmptyObject(this.waypoints.horizontal),
-        e = this.Adapter.isEmptyObject(this.waypoints.vertical);t && e && (this.adapter.off(".waypoints"), delete o[this.key]);
-  }, e.prototype.createThrottledResizeHandler = function () {
-    function t() {
-      e.handleResize(), e.didResize = !1;
-    }var e = this;this.adapter.on("resize.waypoints", function () {
-      e.didResize || (e.didResize = !0, n.requestAnimationFrame(t));
-    });
-  }, e.prototype.createThrottledScrollHandler = function () {
-    function t() {
-      e.handleScroll(), e.didScroll = !1;
-    }var e = this;this.adapter.on("scroll.waypoints", function () {
-      (!e.didScroll || n.isTouch) && (e.didScroll = !0, n.requestAnimationFrame(t));
-    });
-  }, e.prototype.handleResize = function () {
-    n.Context.refreshAll();
-  }, e.prototype.handleScroll = function () {
-    var t = {},
-        e = { horizontal: { newScroll: this.adapter.scrollLeft(), oldScroll: this.oldScroll.x, forward: "right", backward: "left" }, vertical: { newScroll: this.adapter.scrollTop(), oldScroll: this.oldScroll.y, forward: "down", backward: "up" } };for (var i in e) {
-      var o = e[i],
-          n = o.newScroll > o.oldScroll,
-          r = n ? o.forward : o.backward;for (var s in this.waypoints[i]) {
-        var a = this.waypoints[i][s],
-            l = o.oldScroll < a.triggerPoint,
-            h = o.newScroll >= a.triggerPoint,
-            p = l && h,
-            u = !l && !h;(p || u) && (a.queueTrigger(r), t[a.group.id] = a.group);
-      }
-    }for (var c in t) t[c].flushTriggers();this.oldScroll = { x: e.horizontal.newScroll, y: e.vertical.newScroll };
-  }, e.prototype.innerHeight = function () {
-    return this.element == this.element.window ? n.viewportHeight() : this.adapter.innerHeight();
-  }, e.prototype.remove = function (t) {
-    delete this.waypoints[t.axis][t.key], this.checkEmpty();
-  }, e.prototype.innerWidth = function () {
-    return this.element == this.element.window ? n.viewportWidth() : this.adapter.innerWidth();
-  }, e.prototype.destroy = function () {
-    var t = [];for (var e in this.waypoints) for (var i in this.waypoints[e]) t.push(this.waypoints[e][i]);for (var o = 0, n = t.length; n > o; o++) t[o].destroy();
-  }, e.prototype.refresh = function () {
-    var t,
-        e = this.element == this.element.window,
-        i = this.adapter.offset(),
-        o = {};this.handleScroll(), t = { horizontal: { contextOffset: e ? 0 : i.left, contextScroll: e ? 0 : this.oldScroll.x, contextDimension: this.innerWidth(), oldScroll: this.oldScroll.x, forward: "right", backward: "left", offsetProp: "left" }, vertical: { contextOffset: e ? 0 : i.top, contextScroll: e ? 0 : this.oldScroll.y, contextDimension: this.innerHeight(), oldScroll: this.oldScroll.y, forward: "down", backward: "up", offsetProp: "top" } };for (var n in t) {
-      var r = t[n];for (var s in this.waypoints[n]) {
-        var a,
-            l,
-            h,
-            p,
-            u,
-            c = this.waypoints[n][s],
-            d = c.options.offset,
-            f = c.triggerPoint,
-            w = 0,
-            y = null == f;c.element !== c.element.window && (w = c.adapter.offset()[r.offsetProp]), "function" == typeof d ? d = d.apply(c) : "string" == typeof d && (d = parseFloat(d), c.options.offset.indexOf("%") > -1 && (d = Math.ceil(r.contextDimension * d / 100))), a = r.contextScroll - r.contextOffset, c.triggerPoint = w + a - d, l = f < r.oldScroll, h = c.triggerPoint >= r.oldScroll, p = l && h, u = !l && !h, !y && p ? (c.queueTrigger(r.backward), o[c.group.id] = c.group) : !y && u ? (c.queueTrigger(r.forward), o[c.group.id] = c.group) : y && r.oldScroll >= c.triggerPoint && (c.queueTrigger(r.forward), o[c.group.id] = c.group);
-      }
-    }for (var g in o) o[g].flushTriggers();return this;
-  }, e.findOrCreateByElement = function (t) {
-    return e.findByElement(t) || new e(t);
-  }, e.refreshAll = function () {
-    for (var t in o) o[t].refresh();
-  }, e.findByElement = function (t) {
-    return o[t.waypointContextKey];
-  }, window.onload = function () {
-    r && r(), e.refreshAll();
-  }, n.requestAnimationFrame = function (e) {
-    var i = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || t;i.call(window, e);
-  }, n.Context = e;
-})(), (function () {
-  "use strict";function t(t, e) {
-    return t.triggerPoint - e.triggerPoint;
-  }function e(t, e) {
-    return e.triggerPoint - t.triggerPoint;
-  }function i(t) {
-    this.name = t.name, this.axis = t.axis, this.id = this.name + "-" + this.axis, this.waypoints = [], this.clearTriggerQueues(), o[this.axis][this.name] = this;
-  }var o = { vertical: {}, horizontal: {} },
-      n = window.Waypoint;i.prototype.add = function (t) {
-    this.waypoints.push(t);
-  }, i.prototype.clearTriggerQueues = function () {
-    this.triggerQueues = { up: [], down: [], left: [], right: [] };
-  }, i.prototype.flushTriggers = function () {
-    for (var i in this.triggerQueues) {
-      var o = this.triggerQueues[i],
-          n = "up" === i || "left" === i;o.sort(n ? e : t);for (var r = 0, s = o.length; s > r; r += 1) {
-        var a = o[r];(a.options.continuous || r === o.length - 1) && a.trigger([i]);
-      }
-    }this.clearTriggerQueues();
-  }, i.prototype.next = function (e) {
-    this.waypoints.sort(t);var i = n.Adapter.inArray(e, this.waypoints),
-        o = i === this.waypoints.length - 1;return o ? null : this.waypoints[i + 1];
-  }, i.prototype.previous = function (e) {
-    this.waypoints.sort(t);var i = n.Adapter.inArray(e, this.waypoints);return i ? this.waypoints[i - 1] : null;
-  }, i.prototype.queueTrigger = function (t, e) {
-    this.triggerQueues[e].push(t);
-  }, i.prototype.remove = function (t) {
-    var e = n.Adapter.inArray(t, this.waypoints);e > -1 && this.waypoints.splice(e, 1);
-  }, i.prototype.first = function () {
-    return this.waypoints[0];
-  }, i.prototype.last = function () {
-    return this.waypoints[this.waypoints.length - 1];
-  }, i.findOrCreate = function (t) {
-    return o[t.axis][t.name] || new i(t);
-  }, n.Group = i;
-})(), (function () {
-  "use strict";function t(t) {
-    this.$element = e(t);
-  }var e = window.jQuery,
-      i = window.Waypoint;e.each(["innerHeight", "innerWidth", "off", "offset", "on", "outerHeight", "outerWidth", "scrollLeft", "scrollTop"], function (e, i) {
-    t.prototype[i] = function () {
-      var t = Array.prototype.slice.call(arguments);return this.$element[i].apply(this.$element, t);
-    };
-  }), e.each(["extend", "inArray", "isEmptyObject"], function (i, o) {
-    t[o] = e[o];
-  }), i.adapters.push({ name: "jquery", Adapter: t }), i.Adapter = t;
-})(), (function () {
-  "use strict";function t(t) {
-    return function () {
-      var i = [],
-          o = arguments[0];return (t.isFunction(arguments[0]) && (o = t.extend({}, arguments[1]), o.handler = arguments[0]), this.each(function () {
-        var n = t.extend({}, o, { element: this });"string" == typeof n.context && (n.context = t(this).closest(n.context)[0]), i.push(new e(n));
-      }), i);
-    };
-  }var e = window.Waypoint;window.jQuery && (window.jQuery.fn.waypoint = t(window.jQuery)), window.Zepto && (window.Zepto.fn.waypoint = t(window.Zepto));
-})();
-
-},{}],"/var/lib/jenkins/jobs/gamevy-homepage/workspace/js/landitt.js":[function(require,module,exports){
-"use strict";
-
-require("./jquery.waypoints.min.js");
-require("./smoothscroll.js");
-
-if ($(".hero").length) {
+if ((0, _jquery2["default"])(".hero").length) {
     /* Auto close navbar on click (mobile menu) */
-    $(".navbar-nav > li > a").click(function () {
-        $(".navbar-collapse").collapse("hide");
+    (0, _jquery2["default"])(".navbar-nav > li > a").click(function () {
+        (0, _jquery2["default"])(".navbar-collapse").collapse("hide");
+        console.log("here");
     });
 
     /* Change navbar class on scroll */
-
-    $(".wrapper").waypoint(function () {
-        $(".navbar").toggleClass("js-navbar-top");
-        $(".navbar.js-toggleClass").toggleClass("navbar-default navbar-inverse");
+    (0, _jquery2["default"])(".wrapper").waypoint(function () {
+        (0, _jquery2["default"])(".navbar").toggleClass("js-navbar-top");
+        (0, _jquery2["default"])(".navbar.js-toggleClass").toggleClass("navbar-default navbar-inverse");
         return false;
     }, { offset: "-20px" });
 
     /* Change navbar class on collapse/uncollapse in its top position */
-
-    $(".wrapper .navbar-collapse").on("show.bs.collapse", function () {
-        $(".navbar.js-navbar-top").toggleClass("navbar-default navbar-inverse");
-        $(".navbar").toggleClass("js-toggleClass js-noToggleClass");
+    (0, _jquery2["default"])(".wrapper .navbar-collapse").on("show.bs.collapse", function () {
+        (0, _jquery2["default"])(".navbar.js-navbar-top").toggleClass("navbar-default navbar-inverse");
+        (0, _jquery2["default"])(".navbar").toggleClass("js-toggleClass js-noToggleClass");
     });
 
-    $(".wrapper .navbar-collapse").on("hide.bs.collapse", function () {
-        $(".navbar.js-navbar-top").toggleClass("navbar-default navbar-inverse");
-        $(".navbar").toggleClass("js-toggleClass js-noToggleClass");
+    (0, _jquery2["default"])(".wrapper .navbar-collapse").on("hide.bs.collapse", function () {
+        (0, _jquery2["default"])(".navbar.js-navbar-top").toggleClass("navbar-default navbar-inverse");
+        (0, _jquery2["default"])(".navbar").toggleClass("js-toggleClass js-noToggleClass");
     });
 
-    /* Sidebar */
-
-    $(".js-toggle-sidebar").on("click", function () {
-        $(".wrapper").toggleClass("js-wrapper-aside");
-        $(".navbar").toggleClass("js-navbar-aside");
-        $(".sidebar").toggleClass("js-sidebar-aside");
-        return false;
-    });
-
-    /**
-     * Smooth scroll to anchor
-     */
-
-    $(function () {
-        $("a[href*=#]:not([href=#])").click(function () {
+    /* Smooth scroll to anchor */
+    (0, _jquery2["default"])(function () {
+        (0, _jquery2["default"])("a[href*=#]:not([href=#])").click(function () {
             if (location.pathname.replace(/^\//, "") == this.pathname.replace(/^\//, "") && location.hostname == this.hostname) {
-                var target = $(this.hash);
-                target = target.length ? target : $("[name=" + this.hash.slice(1) + "]");
+                var target = (0, _jquery2["default"])(this.hash);
+                target = target.length ? target : (0, _jquery2["default"])("[name=" + this.hash.slice(1) + "]");
                 if (target.length) {
-                    $("html,body").animate({
+                    (0, _jquery2["default"])("html,body").animate({
                         scrollTop: target.offset().top - 70 // 70px offset for navbar menu
                     }, 1000);
                     return false;
@@ -245,320 +53,11 @@ if ($(".hero").length) {
         });
     });
 } else {
-    $(".navbar").toggleClass("js-navbar-top");
-    $(".navbar.js-toggleClass").toggleClass("navbar-default navbar-inverse");
+    (0, _jquery2["default"])(".navbar").toggleClass("js-navbar-top");
+    (0, _jquery2["default"])(".navbar.js-toggleClass").toggleClass("navbar-default navbar-inverse");
 }
 
-},{"./jquery.waypoints.min.js":"/var/lib/jenkins/jobs/gamevy-homepage/workspace/js/jquery.waypoints.min.js","./smoothscroll.js":"/var/lib/jenkins/jobs/gamevy-homepage/workspace/js/smoothscroll.js"}],"/var/lib/jenkins/jobs/gamevy-homepage/workspace/js/smoothscroll.js":[function(require,module,exports){
-// SmoothScroll v0.9.9
-// Licensed under the terms of the MIT license.
-
-// People involved
-// - Balazs Galambosi: maintainer (CHANGELOG.txt)
-// - Patrick Brunner (patrickb1991@gmail.com)
-// - Michael Herf: ssc_pulse Algorithm
-
-"use strict";
-
-function ssc_init() {
-    if (!document.body) return;
-    var e = document.body;
-    var t = document.documentElement;
-    var n = window.innerHeight;
-    var r = e.scrollHeight;
-    ssc_root = document.compatMode.indexOf("CSS") >= 0 ? t : e;
-    ssc_activeElement = e;
-    ssc_initdone = true;
-    if (top != self) {
-        ssc_frame = true;
-    } else if (r > n && (e.offsetHeight <= n || t.offsetHeight <= n)) {
-        ssc_root.style.height = "auto";
-        if (ssc_root.offsetHeight <= n) {
-            var i = document.createElement("div");
-            i.style.clear = "both";
-            e.appendChild(i);
-        }
-    }
-    if (!ssc_fixedback) {
-        e.style.backgroundAttachment = "scroll";
-        t.style.backgroundAttachment = "scroll";
-    }
-    if (ssc_keyboardsupport) {
-        ssc_addEvent("keydown", ssc_keydown);
-    }
-}
-
-function ssc_scrollArray(e, t, n, r) {
-    r || (r = 1e3);
-    ssc_directionCheck(t, n);
-    ssc_que.push({
-        x: t,
-        y: n,
-        lastX: t < 0 ? .99 : -.99,
-        lastY: n < 0 ? .99 : -.99,
-        start: +new Date()
-    });
-    if (ssc_pending) {
-        return;
-    }
-    var i = function i() {
-        var s = +new Date();
-        var o = 0;
-        var u = 0;
-        for (var a = 0; a < ssc_que.length; a++) {
-            var f = ssc_que[a];
-            var l = s - f.start;
-            var c = l >= ssc_animtime;
-            var h = c ? 1 : l / ssc_animtime;
-            if (ssc_pulseAlgorithm) {
-                h = ssc_pulse(h);
-            }
-            var p = f.x * h - f.lastX >> 0;
-            var d = f.y * h - f.lastY >> 0;
-            o += p;
-            u += d;
-            f.lastX += p;
-            f.lastY += d;
-            if (c) {
-                ssc_que.splice(a, 1);
-                a--;
-            }
-        }
-        if (t) {
-            var v = e.scrollLeft;
-            e.scrollLeft += o;
-            if (o && e.scrollLeft === v) {
-                t = 0;
-            }
-        }
-        if (n) {
-            var m = e.scrollTop;
-            e.scrollTop += u;
-            if (u && e.scrollTop === m) {
-                n = 0;
-            }
-        }
-        if (!t && !n) {
-            ssc_que = [];
-        }
-        if (ssc_que.length) {
-            setTimeout(i, r / ssc_framerate + 1);
-        } else {
-            ssc_pending = false;
-        }
-    };
-    setTimeout(i, 0);
-    ssc_pending = true;
-}
-
-function ssc_wheel(e) {
-    if (!ssc_initdone) {
-        ssc_init();
-    }
-    var t = e.target;
-    var n = ssc_overflowingAncestor(t);
-    if (!n || e.defaultPrevented || ssc_isNodeName(ssc_activeElement, "embed") || ssc_isNodeName(t, "embed") && /\.pdf/i.test(t.src)) {
-        return true;
-    }
-    var r = e.wheelDeltaX || 0;
-    var i = e.wheelDeltaY || 0;
-    if (!r && !i) {
-        i = e.wheelDelta || 0;
-    }
-    if (Math.abs(r) > 1.2) {
-        r *= ssc_stepsize / 120;
-    }
-    if (Math.abs(i) > 1.2) {
-        i *= ssc_stepsize / 120;
-    }
-    ssc_scrollArray(n, -r, -i);
-    e.preventDefault();
-}
-
-function ssc_keydown(e) {
-    var t = e.target;
-    var n = e.ctrlKey || e.altKey || e.metaKey;
-    if (/input|textarea|embed/i.test(t.nodeName) || t.isContentEditable || e.defaultPrevented || n) {
-        return true;
-    }
-    if (ssc_isNodeName(t, "button") && e.keyCode === ssc_key.spacebar) {
-        return true;
-    }
-    var r,
-        i = 0,
-        s = 0;
-    var o = ssc_overflowingAncestor(ssc_activeElement);
-    var u = o.clientHeight;
-    if (o == document.body) {
-        u = window.innerHeight;
-    }
-    switch (e.keyCode) {
-        case ssc_key.up:
-            s = -ssc_arrowscroll;
-            break;
-        case ssc_key.down:
-            s = ssc_arrowscroll;
-            break;
-        case ssc_key.spacebar:
-            r = e.shiftKey ? 1 : -1;
-            s = -r * u * .9;
-            break;
-        case ssc_key.pageup:
-            s = -u * .9;
-            break;
-        case ssc_key.pagedown:
-            s = u * .9;
-            break;
-        case ssc_key.home:
-            s = -o.scrollTop;
-            break;
-        case ssc_key.end:
-            var a = o.scrollHeight - o.scrollTop - u;
-            s = a > 0 ? a + 10 : 0;
-            break;
-        case ssc_key.left:
-            i = -ssc_arrowscroll;
-            break;
-        case ssc_key.right:
-            i = ssc_arrowscroll;
-            break;
-        default:
-            return true;
-    }
-    ssc_scrollArray(o, i, s);
-    e.preventDefault();
-}
-
-function ssc_mousedown(e) {
-    ssc_activeElement = e.target;
-}
-
-function ssc_setCache(e, t) {
-    for (var n = e.length; n--;) ssc_cache[ssc_uniqueID(e[n])] = t;
-    return t;
-}
-
-function ssc_overflowingAncestor(e) {
-    var t = [];
-    var n = ssc_root.scrollHeight;
-    do {
-        var r = ssc_cache[ssc_uniqueID(e)];
-        if (r) {
-            return ssc_setCache(t, r);
-        }
-        t.push(e);
-        if (n === e.scrollHeight) {
-            if (!ssc_frame || ssc_root.clientHeight + 10 < n) {
-                return ssc_setCache(t, document.body);
-            }
-        } else if (e.clientHeight + 10 < e.scrollHeight) {
-            overflow = getComputedStyle(e, "").getPropertyValue("overflow");
-            if (overflow === "scroll" || overflow === "auto") {
-                return ssc_setCache(t, e);
-            }
-        }
-    } while (e = e.parentNode);
-}
-
-function ssc_addEvent(e, t, n) {
-    window.addEventListener(e, t, n || false);
-}
-
-function ssc_removeEvent(e, t, n) {
-    window.removeEventListener(e, t, n || false);
-}
-
-function ssc_isNodeName(e, t) {
-    return e.nodeName.toLowerCase() === t.toLowerCase();
-}
-
-function ssc_directionCheck(e, t) {
-    e = e > 0 ? 1 : -1;
-    t = t > 0 ? 1 : -1;
-    if (ssc_direction.x !== e || ssc_direction.y !== t) {
-        ssc_direction.x = e;
-        ssc_direction.y = t;
-        ssc_que = [];
-    }
-}
-
-function ssc_pulse_(e) {
-    var t, n, r;
-    e = e * ssc_pulseScale;
-    if (e < 1) {
-        t = e - (1 - Math.exp(-e));
-    } else {
-        n = Math.exp(-1);
-        e -= 1;
-        r = 1 - Math.exp(-e);
-        t = n + r * (1 - n);
-    }
-    return t * ssc_pulseNormalize;
-}
-
-function ssc_pulse(e) {
-    if (e >= 1) return 1;
-    if (e <= 0) return 0;
-    if (ssc_pulseNormalize == 1) {
-        ssc_pulseNormalize /= ssc_pulse_(1);
-    }
-    return ssc_pulse_(e);
-}
-
-var ssc_framerate = 150;
-var ssc_animtime = 500;
-var ssc_stepsize = 150;
-var ssc_pulseAlgorithm = true;
-var ssc_pulseScale = 6;
-var ssc_pulseNormalize = 1;
-var ssc_keyboardsupport = true;
-var ssc_arrowscroll = 50;
-var ssc_frame = false;
-var ssc_direction = {
-    x: 0,
-    y: 0
-};
-
-var ssc_initdone = false;
-var ssc_fixedback = true;
-var ssc_root = document.documentElement;
-var ssc_activeElement;
-var ssc_key = {
-    left: 37,
-    up: 38,
-    right: 39,
-    down: 40,
-    spacebar: 32,
-    pageup: 33,
-    pagedown: 34,
-    end: 35,
-    home: 36
-};
-
-var ssc_que = [];
-var ssc_pending = false;
-var ssc_cache = {};
-
-setInterval(function () {
-    ssc_cache = {};
-}, 10 * 1e3);
-
-var ssc_uniqueID = (function () {
-    var e = 0;
-    return function (t) {
-        return t.ssc_uniqueID || (t.ssc_uniqueID = e++);
-    };
-})();
-
-var ischrome = /chrome/.test(navigator.userAgent.toLowerCase());
-
-if (ischrome) {
-    ssc_addEvent("mousedown", ssc_mousedown);
-    ssc_addEvent("mousewheel", ssc_wheel);
-    ssc_addEvent("load", ssc_init);
-}
-
-},{}],"/var/lib/jenkins/jobs/gamevy-homepage/workspace/node_modules/bootstrap/dist/js/npm.js":[function(require,module,exports){
+},{"../node_modules/waypoints/lib/jquery.waypoints.js":"/var/lib/jenkins/jobs/gamevy-homepage/workspace/node_modules/waypoints/lib/jquery.waypoints.js","bootstrap":"/var/lib/jenkins/jobs/gamevy-homepage/workspace/node_modules/bootstrap/dist/js/npm.js","jquery":"/var/lib/jenkins/jobs/gamevy-homepage/workspace/node_modules/jquery/dist/jquery.js"}],"/var/lib/jenkins/jobs/gamevy-homepage/workspace/node_modules/bootstrap/dist/js/npm.js":[function(require,module,exports){
 // This file is autogenerated via the `commonjs` Grunt task. You can require() this file in a CommonJS environment.
 require('../../js/transition.js')
 require('../../js/alert.js')
@@ -12142,4 +11641,652 @@ return jQuery;
 
 }));
 
+},{}],"/var/lib/jenkins/jobs/gamevy-homepage/workspace/node_modules/waypoints/lib/jquery.waypoints.js":[function(require,module,exports){
+/*!
+Waypoints - 3.1.1
+Copyright © 2011-2015 Caleb Troughton
+Licensed under the MIT license.
+https://github.com/imakewebthings/waypoints/blog/master/licenses.txt
+*/
+(function() {
+  'use strict'
+
+  var keyCounter = 0
+  var allWaypoints = {}
+
+  /* http://imakewebthings.com/waypoints/api/waypoint */
+  function Waypoint(options) {
+    if (!options) {
+      throw new Error('No options passed to Waypoint constructor')
+    }
+    if (!options.element) {
+      throw new Error('No element option passed to Waypoint constructor')
+    }
+    if (!options.handler) {
+      throw new Error('No handler option passed to Waypoint constructor')
+    }
+
+    this.key = 'waypoint-' + keyCounter
+    this.options = Waypoint.Adapter.extend({}, Waypoint.defaults, options)
+    this.element = this.options.element
+    this.adapter = new Waypoint.Adapter(this.element)
+    this.callback = options.handler
+    this.axis = this.options.horizontal ? 'horizontal' : 'vertical'
+    this.enabled = this.options.enabled
+    this.triggerPoint = null
+    this.group = Waypoint.Group.findOrCreate({
+      name: this.options.group,
+      axis: this.axis
+    })
+    this.context = Waypoint.Context.findOrCreateByElement(this.options.context)
+
+    if (Waypoint.offsetAliases[this.options.offset]) {
+      this.options.offset = Waypoint.offsetAliases[this.options.offset]
+    }
+    this.group.add(this)
+    this.context.add(this)
+    allWaypoints[this.key] = this
+    keyCounter += 1
+  }
+
+  /* Private */
+  Waypoint.prototype.queueTrigger = function(direction) {
+    this.group.queueTrigger(this, direction)
+  }
+
+  /* Private */
+  Waypoint.prototype.trigger = function(args) {
+    if (!this.enabled) {
+      return
+    }
+    if (this.callback) {
+      this.callback.apply(this, args)
+    }
+  }
+
+  /* Public */
+  /* http://imakewebthings.com/waypoints/api/destroy */
+  Waypoint.prototype.destroy = function() {
+    this.context.remove(this)
+    this.group.remove(this)
+    delete allWaypoints[this.key]
+  }
+
+  /* Public */
+  /* http://imakewebthings.com/waypoints/api/disable */
+  Waypoint.prototype.disable = function() {
+    this.enabled = false
+    return this
+  }
+
+  /* Public */
+  /* http://imakewebthings.com/waypoints/api/enable */
+  Waypoint.prototype.enable = function() {
+    this.context.refresh()
+    this.enabled = true
+    return this
+  }
+
+  /* Public */
+  /* http://imakewebthings.com/waypoints/api/next */
+  Waypoint.prototype.next = function() {
+    return this.group.next(this)
+  }
+
+  /* Public */
+  /* http://imakewebthings.com/waypoints/api/previous */
+  Waypoint.prototype.previous = function() {
+    return this.group.previous(this)
+  }
+
+  /* Private */
+  Waypoint.invokeAll = function(method) {
+    var allWaypointsArray = []
+    for (var waypointKey in allWaypoints) {
+      allWaypointsArray.push(allWaypoints[waypointKey])
+    }
+    for (var i = 0, end = allWaypointsArray.length; i < end; i++) {
+      allWaypointsArray[i][method]()
+    }
+  }
+
+  /* Public */
+  /* http://imakewebthings.com/waypoints/api/destroy-all */
+  Waypoint.destroyAll = function() {
+    Waypoint.invokeAll('destroy')
+  }
+
+  /* Public */
+  /* http://imakewebthings.com/waypoints/api/disable-all */
+  Waypoint.disableAll = function() {
+    Waypoint.invokeAll('disable')
+  }
+
+  /* Public */
+  /* http://imakewebthings.com/waypoints/api/enable-all */
+  Waypoint.enableAll = function() {
+    Waypoint.invokeAll('enable')
+  }
+
+  /* Public */
+  /* http://imakewebthings.com/waypoints/api/refresh-all */
+  Waypoint.refreshAll = function() {
+    Waypoint.Context.refreshAll()
+  }
+
+  /* Public */
+  /* http://imakewebthings.com/waypoints/api/viewport-height */
+  Waypoint.viewportHeight = function() {
+    return window.innerHeight || document.documentElement.clientHeight
+  }
+
+  /* Public */
+  /* http://imakewebthings.com/waypoints/api/viewport-width */
+  Waypoint.viewportWidth = function() {
+    return document.documentElement.clientWidth
+  }
+
+  Waypoint.adapters = []
+
+  Waypoint.defaults = {
+    context: window,
+    continuous: true,
+    enabled: true,
+    group: 'default',
+    horizontal: false,
+    offset: 0
+  }
+
+  Waypoint.offsetAliases = {
+    'bottom-in-view': function() {
+      return this.context.innerHeight() - this.adapter.outerHeight()
+    },
+    'right-in-view': function() {
+      return this.context.innerWidth() - this.adapter.outerWidth()
+    }
+  }
+
+  window.Waypoint = Waypoint
+}())
+;(function() {
+  'use strict'
+
+  function requestAnimationFrameShim(callback) {
+    window.setTimeout(callback, 1000 / 60)
+  }
+
+  var keyCounter = 0
+  var contexts = {}
+  var Waypoint = window.Waypoint
+  var oldWindowLoad = window.onload
+
+  /* http://imakewebthings.com/waypoints/api/context */
+  function Context(element) {
+    this.element = element
+    this.Adapter = Waypoint.Adapter
+    this.adapter = new this.Adapter(element)
+    this.key = 'waypoint-context-' + keyCounter
+    this.didScroll = false
+    this.didResize = false
+    this.oldScroll = {
+      x: this.adapter.scrollLeft(),
+      y: this.adapter.scrollTop()
+    }
+    this.waypoints = {
+      vertical: {},
+      horizontal: {}
+    }
+
+    element.waypointContextKey = this.key
+    contexts[element.waypointContextKey] = this
+    keyCounter += 1
+
+    this.createThrottledScrollHandler()
+    this.createThrottledResizeHandler()
+  }
+
+  /* Private */
+  Context.prototype.add = function(waypoint) {
+    var axis = waypoint.options.horizontal ? 'horizontal' : 'vertical'
+    this.waypoints[axis][waypoint.key] = waypoint
+    this.refresh()
+  }
+
+  /* Private */
+  Context.prototype.checkEmpty = function() {
+    var horizontalEmpty = this.Adapter.isEmptyObject(this.waypoints.horizontal)
+    var verticalEmpty = this.Adapter.isEmptyObject(this.waypoints.vertical)
+    if (horizontalEmpty && verticalEmpty) {
+      this.adapter.off('.waypoints')
+      delete contexts[this.key]
+    }
+  }
+
+  /* Private */
+  Context.prototype.createThrottledResizeHandler = function() {
+    var self = this
+
+    function resizeHandler() {
+      self.handleResize()
+      self.didResize = false
+    }
+
+    this.adapter.on('resize.waypoints', function() {
+      if (!self.didResize) {
+        self.didResize = true
+        Waypoint.requestAnimationFrame(resizeHandler)
+      }
+    })
+  }
+
+  /* Private */
+  Context.prototype.createThrottledScrollHandler = function() {
+    var self = this
+    function scrollHandler() {
+      self.handleScroll()
+      self.didScroll = false
+    }
+
+    this.adapter.on('scroll.waypoints', function() {
+      if (!self.didScroll || Waypoint.isTouch) {
+        self.didScroll = true
+        Waypoint.requestAnimationFrame(scrollHandler)
+      }
+    })
+  }
+
+  /* Private */
+  Context.prototype.handleResize = function() {
+    Waypoint.Context.refreshAll()
+  }
+
+  /* Private */
+  Context.prototype.handleScroll = function() {
+    var triggeredGroups = {}
+    var axes = {
+      horizontal: {
+        newScroll: this.adapter.scrollLeft(),
+        oldScroll: this.oldScroll.x,
+        forward: 'right',
+        backward: 'left'
+      },
+      vertical: {
+        newScroll: this.adapter.scrollTop(),
+        oldScroll: this.oldScroll.y,
+        forward: 'down',
+        backward: 'up'
+      }
+    }
+
+    for (var axisKey in axes) {
+      var axis = axes[axisKey]
+      var isForward = axis.newScroll > axis.oldScroll
+      var direction = isForward ? axis.forward : axis.backward
+
+      for (var waypointKey in this.waypoints[axisKey]) {
+        var waypoint = this.waypoints[axisKey][waypointKey]
+        var wasBeforeTriggerPoint = axis.oldScroll < waypoint.triggerPoint
+        var nowAfterTriggerPoint = axis.newScroll >= waypoint.triggerPoint
+        var crossedForward = wasBeforeTriggerPoint && nowAfterTriggerPoint
+        var crossedBackward = !wasBeforeTriggerPoint && !nowAfterTriggerPoint
+        if (crossedForward || crossedBackward) {
+          waypoint.queueTrigger(direction)
+          triggeredGroups[waypoint.group.id] = waypoint.group
+        }
+      }
+    }
+
+    for (var groupKey in triggeredGroups) {
+      triggeredGroups[groupKey].flushTriggers()
+    }
+
+    this.oldScroll = {
+      x: axes.horizontal.newScroll,
+      y: axes.vertical.newScroll
+    }
+  }
+
+  /* Private */
+  Context.prototype.innerHeight = function() {
+    /*eslint-disable eqeqeq */
+    if (this.element == this.element.window) {
+      return Waypoint.viewportHeight()
+    }
+    /*eslint-enable eqeqeq */
+    return this.adapter.innerHeight()
+  }
+
+  /* Private */
+  Context.prototype.remove = function(waypoint) {
+    delete this.waypoints[waypoint.axis][waypoint.key]
+    this.checkEmpty()
+  }
+
+  /* Private */
+  Context.prototype.innerWidth = function() {
+    /*eslint-disable eqeqeq */
+    if (this.element == this.element.window) {
+      return Waypoint.viewportWidth()
+    }
+    /*eslint-enable eqeqeq */
+    return this.adapter.innerWidth()
+  }
+
+  /* Public */
+  /* http://imakewebthings.com/waypoints/api/context-destroy */
+  Context.prototype.destroy = function() {
+    var allWaypoints = []
+    for (var axis in this.waypoints) {
+      for (var waypointKey in this.waypoints[axis]) {
+        allWaypoints.push(this.waypoints[axis][waypointKey])
+      }
+    }
+    for (var i = 0, end = allWaypoints.length; i < end; i++) {
+      allWaypoints[i].destroy()
+    }
+  }
+
+  /* Public */
+  /* http://imakewebthings.com/waypoints/api/context-refresh */
+  Context.prototype.refresh = function() {
+    /*eslint-disable eqeqeq */
+    var isWindow = this.element == this.element.window
+    /*eslint-enable eqeqeq */
+    var contextOffset = this.adapter.offset()
+    var triggeredGroups = {}
+    var axes
+
+    this.handleScroll()
+    axes = {
+      horizontal: {
+        contextOffset: isWindow ? 0 : contextOffset.left,
+        contextScroll: isWindow ? 0 : this.oldScroll.x,
+        contextDimension: this.innerWidth(),
+        oldScroll: this.oldScroll.x,
+        forward: 'right',
+        backward: 'left',
+        offsetProp: 'left'
+      },
+      vertical: {
+        contextOffset: isWindow ? 0 : contextOffset.top,
+        contextScroll: isWindow ? 0 : this.oldScroll.y,
+        contextDimension: this.innerHeight(),
+        oldScroll: this.oldScroll.y,
+        forward: 'down',
+        backward: 'up',
+        offsetProp: 'top'
+      }
+    }
+
+    for (var axisKey in axes) {
+      var axis = axes[axisKey]
+      for (var waypointKey in this.waypoints[axisKey]) {
+        var waypoint = this.waypoints[axisKey][waypointKey]
+        var adjustment = waypoint.options.offset
+        var oldTriggerPoint = waypoint.triggerPoint
+        var elementOffset = 0
+        var freshWaypoint = oldTriggerPoint == null
+        var contextModifier, wasBeforeScroll, nowAfterScroll
+        var triggeredBackward, triggeredForward
+
+        if (waypoint.element !== waypoint.element.window) {
+          elementOffset = waypoint.adapter.offset()[axis.offsetProp]
+        }
+
+        if (typeof adjustment === 'function') {
+          adjustment = adjustment.apply(waypoint)
+        }
+        else if (typeof adjustment === 'string') {
+          adjustment = parseFloat(adjustment)
+          if (waypoint.options.offset.indexOf('%') > - 1) {
+            adjustment = Math.ceil(axis.contextDimension * adjustment / 100)
+          }
+        }
+
+        contextModifier = axis.contextScroll - axis.contextOffset
+        waypoint.triggerPoint = elementOffset + contextModifier - adjustment
+        wasBeforeScroll = oldTriggerPoint < axis.oldScroll
+        nowAfterScroll = waypoint.triggerPoint >= axis.oldScroll
+        triggeredBackward = wasBeforeScroll && nowAfterScroll
+        triggeredForward = !wasBeforeScroll && !nowAfterScroll
+
+        if (!freshWaypoint && triggeredBackward) {
+          waypoint.queueTrigger(axis.backward)
+          triggeredGroups[waypoint.group.id] = waypoint.group
+        }
+        else if (!freshWaypoint && triggeredForward) {
+          waypoint.queueTrigger(axis.forward)
+          triggeredGroups[waypoint.group.id] = waypoint.group
+        }
+        else if (freshWaypoint && axis.oldScroll >= waypoint.triggerPoint) {
+          waypoint.queueTrigger(axis.forward)
+          triggeredGroups[waypoint.group.id] = waypoint.group
+        }
+      }
+    }
+
+    for (var groupKey in triggeredGroups) {
+      triggeredGroups[groupKey].flushTriggers()
+    }
+
+    return this
+  }
+
+  /* Private */
+  Context.findOrCreateByElement = function(element) {
+    return Context.findByElement(element) || new Context(element)
+  }
+
+  /* Private */
+  Context.refreshAll = function() {
+    for (var contextId in contexts) {
+      contexts[contextId].refresh()
+    }
+  }
+
+  /* Public */
+  /* http://imakewebthings.com/waypoints/api/context-find-by-element */
+  Context.findByElement = function(element) {
+    return contexts[element.waypointContextKey]
+  }
+
+  window.onload = function() {
+    if (oldWindowLoad) {
+      oldWindowLoad()
+    }
+    Context.refreshAll()
+  }
+
+  Waypoint.requestAnimationFrame = function(callback) {
+    var requestFn = window.requestAnimationFrame ||
+      window.mozRequestAnimationFrame ||
+      window.webkitRequestAnimationFrame ||
+      requestAnimationFrameShim
+    requestFn.call(window, callback)
+  }
+  Waypoint.Context = Context
+}())
+;(function() {
+  'use strict'
+
+  function byTriggerPoint(a, b) {
+    return a.triggerPoint - b.triggerPoint
+  }
+
+  function byReverseTriggerPoint(a, b) {
+    return b.triggerPoint - a.triggerPoint
+  }
+
+  var groups = {
+    vertical: {},
+    horizontal: {}
+  }
+  var Waypoint = window.Waypoint
+
+  /* http://imakewebthings.com/waypoints/api/group */
+  function Group(options) {
+    this.name = options.name
+    this.axis = options.axis
+    this.id = this.name + '-' + this.axis
+    this.waypoints = []
+    this.clearTriggerQueues()
+    groups[this.axis][this.name] = this
+  }
+
+  /* Private */
+  Group.prototype.add = function(waypoint) {
+    this.waypoints.push(waypoint)
+  }
+
+  /* Private */
+  Group.prototype.clearTriggerQueues = function() {
+    this.triggerQueues = {
+      up: [],
+      down: [],
+      left: [],
+      right: []
+    }
+  }
+
+  /* Private */
+  Group.prototype.flushTriggers = function() {
+    for (var direction in this.triggerQueues) {
+      var waypoints = this.triggerQueues[direction]
+      var reverse = direction === 'up' || direction === 'left'
+      waypoints.sort(reverse ? byReverseTriggerPoint : byTriggerPoint)
+      for (var i = 0, end = waypoints.length; i < end; i += 1) {
+        var waypoint = waypoints[i]
+        if (waypoint.options.continuous || i === waypoints.length - 1) {
+          waypoint.trigger([direction])
+        }
+      }
+    }
+    this.clearTriggerQueues()
+  }
+
+  /* Private */
+  Group.prototype.next = function(waypoint) {
+    this.waypoints.sort(byTriggerPoint)
+    var index = Waypoint.Adapter.inArray(waypoint, this.waypoints)
+    var isLast = index === this.waypoints.length - 1
+    return isLast ? null : this.waypoints[index + 1]
+  }
+
+  /* Private */
+  Group.prototype.previous = function(waypoint) {
+    this.waypoints.sort(byTriggerPoint)
+    var index = Waypoint.Adapter.inArray(waypoint, this.waypoints)
+    return index ? this.waypoints[index - 1] : null
+  }
+
+  /* Private */
+  Group.prototype.queueTrigger = function(waypoint, direction) {
+    this.triggerQueues[direction].push(waypoint)
+  }
+
+  /* Private */
+  Group.prototype.remove = function(waypoint) {
+    var index = Waypoint.Adapter.inArray(waypoint, this.waypoints)
+    if (index > -1) {
+      this.waypoints.splice(index, 1)
+    }
+  }
+
+  /* Public */
+  /* http://imakewebthings.com/waypoints/api/first */
+  Group.prototype.first = function() {
+    return this.waypoints[0]
+  }
+
+  /* Public */
+  /* http://imakewebthings.com/waypoints/api/last */
+  Group.prototype.last = function() {
+    return this.waypoints[this.waypoints.length - 1]
+  }
+
+  /* Private */
+  Group.findOrCreate = function(options) {
+    return groups[options.axis][options.name] || new Group(options)
+  }
+
+  Waypoint.Group = Group
+}())
+;(function() {
+  'use strict'
+
+  var $ = window.jQuery
+  var Waypoint = window.Waypoint
+
+  function JQueryAdapter(element) {
+    this.$element = $(element)
+  }
+
+  $.each([
+    'innerHeight',
+    'innerWidth',
+    'off',
+    'offset',
+    'on',
+    'outerHeight',
+    'outerWidth',
+    'scrollLeft',
+    'scrollTop'
+  ], function(i, method) {
+    JQueryAdapter.prototype[method] = function() {
+      var args = Array.prototype.slice.call(arguments)
+      return this.$element[method].apply(this.$element, args)
+    }
+  })
+
+  $.each([
+    'extend',
+    'inArray',
+    'isEmptyObject'
+  ], function(i, method) {
+    JQueryAdapter[method] = $[method]
+  })
+
+  Waypoint.adapters.push({
+    name: 'jquery',
+    Adapter: JQueryAdapter
+  })
+  Waypoint.Adapter = JQueryAdapter
+}())
+;(function() {
+  'use strict'
+
+  var Waypoint = window.Waypoint
+
+  function createExtension(framework) {
+    return function() {
+      var waypoints = []
+      var overrides = arguments[0]
+
+      if (framework.isFunction(arguments[0])) {
+        overrides = framework.extend({}, arguments[1])
+        overrides.handler = arguments[0]
+      }
+
+      this.each(function() {
+        var options = framework.extend({}, overrides, {
+          element: this
+        })
+        if (typeof options.context === 'string') {
+          options.context = framework(this).closest(options.context)[0]
+        }
+        waypoints.push(new Waypoint(options))
+      })
+
+      return waypoints
+    }
+  }
+
+  if (window.jQuery) {
+    window.jQuery.fn.waypoint = createExtension(window.jQuery)
+  }
+  if (window.Zepto) {
+    window.Zepto.fn.waypoint = createExtension(window.Zepto)
+  }
+}())
+;
 },{}]},{},["/var/lib/jenkins/jobs/gamevy-homepage/workspace/js/index.js"]);
