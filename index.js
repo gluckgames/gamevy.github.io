@@ -8,72 +8,136 @@ var _jquery = require("jquery");
 var _jquery2 = _interopRequireDefault(_jquery);
 
 window.jQuery = _jquery2["default"];
-require("bootstrap");
 
-require("../node_modules/waypoints/lib/jquery.waypoints.js");
+require("./main.js");
+require("./kiosk.js");
 
-if ((0, _jquery2["default"])('.hero').length) {
-    /* Auto close navbar on click (mobile menu) */
-    (0, _jquery2["default"])(".navbar-nav > li > a").click(function () {
-        (0, _jquery2["default"])(".navbar-collapse").collapse('hide');
-        console.log("here");
-    });
+},{"./kiosk.js":"/var/lib/jenkins/jobs/gamevy-homepage/workspace/js/kiosk.js","./main.js":"/var/lib/jenkins/jobs/gamevy-homepage/workspace/js/main.js","jquery":"/var/lib/jenkins/jobs/gamevy-homepage/workspace/node_modules/jquery/dist/jquery.js"}],"/var/lib/jenkins/jobs/gamevy-homepage/workspace/js/kiosk.js":[function(require,module,exports){
+(function (global){
+"use strict";
 
-    /* Change navbar class on scroll */
-    (0, _jquery2["default"])(".wrapper").waypoint(function () {
-        (0, _jquery2["default"])(".navbar").toggleClass("js-navbar-top");
-        (0, _jquery2["default"])(".navbar.js-toggleClass").toggleClass("navbar-default navbar-inverse");
-        return false;
-    }, { offset: "-20px" });
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-    /* Change navbar class on collapse/uncollapse in its top position */
-    (0, _jquery2["default"])('.wrapper .navbar-collapse').on('show.bs.collapse', function () {
-        (0, _jquery2["default"])(".navbar.js-navbar-top").toggleClass("navbar-default navbar-inverse");
-        (0, _jquery2["default"])(".navbar").toggleClass("js-toggleClass js-noToggleClass");
-    });
+var _jquery = require("jquery");
 
-    (0, _jquery2["default"])('.wrapper .navbar-collapse').on('hide.bs.collapse', function () {
-        (0, _jquery2["default"])(".navbar.js-navbar-top").toggleClass("navbar-default navbar-inverse");
-        (0, _jquery2["default"])(".navbar").toggleClass("js-toggleClass js-noToggleClass");
-    });
+var _jquery2 = _interopRequireDefault(_jquery);
 
-    /* Smooth scroll to anchor */
+var GAMES = [{ image: "be_the_king", gameId: "be-the-king" }, { image: "the_heist", gameId: "the-heist" }, { image: "spinlotto", gameId: "spinlotto" }, { image: "the_link", gameId: "the-link" }, { image: "buzzword", gameId: "buzzword" }, { image: "roulette", gameId: "roulette-eu" }, { image: "gears_of_fortune", gameId: "gears-of-fortune" }, { image: "diamond_deal", gameId: "diamond-deal" }, { image: "boss_the_lotto", gameId: "boss-the-lotto" }, { image: "boss_the_ball", gameId: "boss-the-ball" }, { image: "spinlotto_scratch", gameId: "scratch", variation: "&gameId=SPINLOTTO_SCRATCH" }, { image: "the_link_scratch", gameId: "scratch", variation: "&gameId=THE_LINK_SCRATCH" }, { image: "casino_scratch", gameId: "scratch", variation: "&gameId=BETSSON_CARDS&brand=betsson" }, { image: "magic_scratch", gameId: "scratch", variation: "&gameId=BETSSON_MAGIC&brand=betsson" }, { image: "treasure_scratch", gameId: "scratch", variation: "&gameId=BETSSON_TREASURE&brand=betsson" }, { image: "diamond_scratch", gameId: "scratch", variation: "&gameId=BETSSON_DIAMOND&brand=betsson" }];
+
+global.kiosk = function kiosk() {
     (0, _jquery2["default"])(function () {
-        (0, _jquery2["default"])('a[href*=#]:not([href=#])').click(function () {
-            if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
-                var target = (0, _jquery2["default"])(this.hash);
-                target = target.length ? target : (0, _jquery2["default"])('[name=' + this.hash.slice(1) + ']');
-                if (target.length) {
-                    (0, _jquery2["default"])('html,body').animate({
-                        scrollTop: target.offset().top - 70 // 70px offset for navbar menu
-                    }, 1000);
-                    return false;
-                }
-            }
+        initGames();
+    });
+};
+
+function initGames() {
+    GAMES.forEach(function (game) {
+        var button = (0, _jquery2["default"])("<li></li>");
+        button.css("background-image", "url(./img/game_" + game.image + ".jpg)");
+        (0, _jquery2["default"])(".games ul").append(button);
+        button.click(function () {
+            (0, _jquery2["default"])("iframe").attr("src", "https://games.gamevy.com/prod/" + game.gameId + "/index.html?env=test&platform=gamevy&resolutionType=web_retina" + (game.variation || ""));
+            goFullscreen();
         });
     });
-} else {
-    (0, _jquery2["default"])(".navbar").toggleClass("js-navbar-top");
-    (0, _jquery2["default"])(".navbar.js-toggleClass").toggleClass("navbar-default navbar-inverse");
+
+    (0, _jquery2["default"])(".games ul").css("width", GAMES.length * 150);
 }
 
-(0, _jquery2["default"])(function () {
-    (0, _jquery2["default"])(".game .game-iframe").each(function (i, element) {
-        element = (0, _jquery2["default"])(element);
-        var ratio = element.data("ratio");
-        function resize() {
-            if (ratio > 1) {
-                var height = Math.min(element.width() / ratio, document.documentElement.clientHeight, 630);
-                element.css("height", height);
-            } else {
-                element.css("height", 630).css("width", 630 * ratio);
-            }
-        }
-        resize();
-        (0, _jquery2["default"])(window).resize(resize);
-    });
-});
+function goFullscreen() {
+    var element = document.body;
+    if (element.requestFullscreen) {
+        // W3C API
+        element.requestFullscreen();
+    } else if (element.mozRequestFullScreen) {
+        // Mozilla current API
+        element.mozRequestFullScreen();
+    } else if (element.webkitRequestFullScreen) {
+        // Webkit current API
+        element.webkitRequestFullScreen();
+    } // Maybe other prefixed APIs?
+}
 
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"jquery":"/var/lib/jenkins/jobs/gamevy-homepage/workspace/node_modules/jquery/dist/jquery.js"}],"/var/lib/jenkins/jobs/gamevy-homepage/workspace/js/main.js":[function(require,module,exports){
+(function (global){
+"use strict";
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+var _jquery = require("jquery");
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+global.main = function main() {
+    require("bootstrap");
+
+    require("../node_modules/waypoints/lib/jquery.waypoints.js");
+
+    if ((0, _jquery2["default"])('.hero').length) {
+        /* Auto close navbar on click (mobile menu) */
+        (0, _jquery2["default"])(".navbar-nav > li > a").click(function () {
+            (0, _jquery2["default"])(".navbar-collapse").collapse('hide');
+            console.log("here");
+        });
+
+        /* Change navbar class on scroll */
+        (0, _jquery2["default"])(".wrapper").waypoint(function () {
+            (0, _jquery2["default"])(".navbar").toggleClass("js-navbar-top");
+            (0, _jquery2["default"])(".navbar.js-toggleClass").toggleClass("navbar-default navbar-inverse");
+            return false;
+        }, { offset: "-20px" });
+
+        /* Change navbar class on collapse/uncollapse in its top position */
+        (0, _jquery2["default"])('.wrapper .navbar-collapse').on('show.bs.collapse', function () {
+            (0, _jquery2["default"])(".navbar.js-navbar-top").toggleClass("navbar-default navbar-inverse");
+            (0, _jquery2["default"])(".navbar").toggleClass("js-toggleClass js-noToggleClass");
+        });
+
+        (0, _jquery2["default"])('.wrapper .navbar-collapse').on('hide.bs.collapse', function () {
+            (0, _jquery2["default"])(".navbar.js-navbar-top").toggleClass("navbar-default navbar-inverse");
+            (0, _jquery2["default"])(".navbar").toggleClass("js-toggleClass js-noToggleClass");
+        });
+
+        /* Smooth scroll to anchor */
+        (0, _jquery2["default"])(function () {
+            (0, _jquery2["default"])('a[href*=#]:not([href=#])').click(function () {
+                if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
+                    var target = (0, _jquery2["default"])(this.hash);
+                    target = target.length ? target : (0, _jquery2["default"])('[name=' + this.hash.slice(1) + ']');
+                    if (target.length) {
+                        (0, _jquery2["default"])('html,body').animate({
+                            scrollTop: target.offset().top - 70 // 70px offset for navbar menu
+                        }, 1000);
+                        return false;
+                    }
+                }
+            });
+        });
+    } else {
+        (0, _jquery2["default"])(".navbar").toggleClass("js-navbar-top");
+        (0, _jquery2["default"])(".navbar.js-toggleClass").toggleClass("navbar-default navbar-inverse");
+    }
+
+    (0, _jquery2["default"])(function () {
+        (0, _jquery2["default"])(".game .game-iframe").each(function (i, element) {
+            element = (0, _jquery2["default"])(element);
+            var ratio = element.data("ratio");
+            function resize() {
+                if (ratio > 1) {
+                    var height = Math.min(element.width() / ratio, document.documentElement.clientHeight, 630);
+                    element.css("height", height);
+                } else {
+                    element.css("height", 630).css("width", 630 * ratio);
+                }
+            }
+            resize();
+            (0, _jquery2["default"])(window).resize(resize);
+        });
+    });
+};
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"../node_modules/waypoints/lib/jquery.waypoints.js":"/var/lib/jenkins/jobs/gamevy-homepage/workspace/node_modules/waypoints/lib/jquery.waypoints.js","bootstrap":"/var/lib/jenkins/jobs/gamevy-homepage/workspace/node_modules/bootstrap/dist/js/npm.js","jquery":"/var/lib/jenkins/jobs/gamevy-homepage/workspace/node_modules/jquery/dist/jquery.js"}],"/var/lib/jenkins/jobs/gamevy-homepage/workspace/node_modules/bootstrap/dist/js/npm.js":[function(require,module,exports){
 // This file is autogenerated via the `commonjs` Grunt task. You can require() this file in a CommonJS environment.
 require('../../js/transition.js')
