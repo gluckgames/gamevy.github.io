@@ -1,4 +1,20 @@
-(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({"/var/lib/jenkins/jobs/gamevy-homepage/workspace/js/index.js":[function(require,module,exports){
+(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({"/var/lib/jenkins/jobs/gamevy-homepage/workspace/js/getQueryParameters.js":[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = getQueryParameters;
+
+function getQueryParameters(str) {
+    return (str || document.location.search).replace(/(^\?)/, '').split("&").map((function (n) {
+        return n = n.split("="), this[n[0]] = n[1], this;
+    }).bind({}))[0];
+}
+
+module.exports = exports["default"];
+
+},{}],"/var/lib/jenkins/jobs/gamevy-homepage/workspace/js/index.js":[function(require,module,exports){
 "use strict";
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
@@ -22,6 +38,10 @@ var _jquery = require("jquery");
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
+var _getQueryParameters = require("./getQueryParameters");
+
+var _getQueryParameters2 = _interopRequireDefault(_getQueryParameters);
+
 var GAMES = [{ image: "be_the_king", gameId: "be-the-king" }, { image: "the_heist", gameId: "the-heist" }, { image: "spinlotto", gameId: "spinlotto" }, { image: "the_link", gameId: "the-link" }, { image: "epic_gems", gameId: "epic-gems" }, { image: "buzzword", gameId: "buzzword" }, { image: "roulette", gameId: "roulette-eu" }, { image: "gears_of_fortune", gameId: "gears-of-fortune" }, { image: "diamond_deal", gameId: "diamond-deal" }, { image: "boss_the_lotto", gameId: "boss-the-lotto" }, { image: "boss_the_ball", gameId: "boss-the-ball" }, { image: "spinlotto_scratch", gameId: "scratch", variation: "&gameId=SPINLOTTO_SCRATCH" }, { image: "the_link_scratch", gameId: "scratch", variation: "&gameId=THE_LINK_SCRATCH" }, { image: "casino_scratch", gameId: "scratch", variation: "&gameId=BETSSON_CARDS&brand=betsson" }, { image: "magic_scratch", gameId: "scratch", variation: "&gameId=BETSSON_MAGIC&brand=betsson" }, { image: "treasure_scratch", gameId: "scratch", variation: "&gameId=BETSSON_TREASURE&brand=betsson" }, { image: "diamond_scratch", gameId: "scratch", variation: "&gameId=BETSSON_DIAMOND&brand=betsson" }];
 
 global.kiosk = function kiosk() {
@@ -31,7 +51,20 @@ global.kiosk = function kiosk() {
 };
 
 function initGames() {
-    GAMES.forEach(function (game) {
+    var query = (0, _getQueryParameters2["default"])();
+
+    var games = GAMES;
+
+    if (query.exclude) {
+        (function () {
+            var exclude = query.exclude.split(",");
+            games = games.filter(function (game) {
+                return exclude.indexOf(game.gameId) === -1;
+            });
+        })();
+    }
+
+    games.forEach(function (game) {
         var button = (0, _jquery2["default"])("<li></li>");
         button.css("background-image", "url(./img/game_" + game.image + ".jpg)");
         (0, _jquery2["default"])(".games ul").append(button);
@@ -59,7 +92,7 @@ function goFullscreen() {
 }
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"jquery":"/var/lib/jenkins/jobs/gamevy-homepage/workspace/node_modules/jquery/dist/jquery.js"}],"/var/lib/jenkins/jobs/gamevy-homepage/workspace/js/main.js":[function(require,module,exports){
+},{"./getQueryParameters":"/var/lib/jenkins/jobs/gamevy-homepage/workspace/js/getQueryParameters.js","jquery":"/var/lib/jenkins/jobs/gamevy-homepage/workspace/node_modules/jquery/dist/jquery.js"}],"/var/lib/jenkins/jobs/gamevy-homepage/workspace/js/main.js":[function(require,module,exports){
 (function (global){
 "use strict";
 
