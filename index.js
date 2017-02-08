@@ -42,7 +42,7 @@ var _getQueryParameters = require("./getQueryParameters");
 
 var _getQueryParameters2 = _interopRequireDefault(_getQueryParameters);
 
-var GAMES = [{ image: "be_the_king", gameId: "be-the-king" }, { image: "the_heist", gameId: "the-heist" }, { image: "spinlotto", gameId: "spinlotto" }, { image: "the_link", gameId: "the-link" }, { image: "epic_gems", gameId: "epic-gems" }, { image: "buzzword", gameId: "buzzword" }, { image: "roulette", gameId: "roulette-eu" }, { image: "gears_of_fortune", gameId: "gears-of-fortune" }, { image: "diamond_deal", gameId: "diamond-deal" }, { image: "boss_the_lotto", gameId: "boss-the-lotto" }, { image: "boss_the_ball", gameId: "boss-the-ball" }, { image: "spinlotto_scratch", gameId: "scratch", variation: "&gameId=SPINLOTTO_SCRATCH" }, { image: "the_link_scratch", gameId: "scratch", variation: "&gameId=THE_LINK_SCRATCH" }, { image: "casino_scratch", gameId: "scratch", variation: "&gameId=BETSSON_CARDS&brand=betsson" }, { image: "magic_scratch", gameId: "scratch", variation: "&gameId=BETSSON_MAGIC&brand=betsson" }, { image: "treasure_scratch", gameId: "scratch", variation: "&gameId=BETSSON_TREASURE&brand=betsson" }, { image: "diamond_scratch", gameId: "scratch", variation: "&gameId=BETSSON_DIAMOND&brand=betsson" }];
+var GAMES = [{ image: "be_the_king", gameId: "be-the-king" }, { image: "the_heist", gameId: "the-heist" }, { image: "spinlotto", gameId: "spinlotto" }, { image: "the_link", gameId: "the-link" }, { image: "epic_gems", gameId: "epic-gems" }, { image: "roulette", gameId: "roulette-eu" }, { image: "gears_of_fortune", gameId: "gears-of-fortune" }, { image: "diamond_deal", gameId: "diamond-deal" }, { image: "boss_the_lotto", gameId: "boss-the-lotto" }, { image: "boss_the_ball", gameId: "boss-the-ball" }, { image: "spinlotto_scratch", gameId: "scratch", variation: "&gameId=SPINLOTTO_SCRATCH" }, { image: "the_link_scratch", gameId: "scratch", variation: "&gameId=THE_LINK_SCRATCH" }, { image: "casino_scratch", gameId: "scratch", variation: "&gameId=BETSSON_CARDS&brand=betsson" }, { image: "magic_scratch", gameId: "scratch", variation: "&gameId=BETSSON_MAGIC&brand=betsson" }, { image: "treasure_scratch", gameId: "scratch", variation: "&gameId=BETSSON_TREASURE&brand=betsson" }, { image: "diamond_scratch", gameId: "scratch", variation: "&gameId=BETSSON_DIAMOND&brand=betsson" }];
 
 global.kiosk = function kiosk() {
     (0, _jquery2["default"])(function () {
@@ -74,7 +74,7 @@ function initGames() {
         });
     });
 
-    (0, _jquery2["default"])(".games ul").css("width", GAMES.length * 150);
+    (0, _jquery2["default"])(".games ul").css("width", games.length * 150);
 }
 
 function goFullscreen() {
